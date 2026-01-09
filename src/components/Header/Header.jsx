@@ -41,7 +41,7 @@ const Header = ({ onToolSelect, currentTool, onPageSelect }) => {
   return (
     <header className="bg-white/95 backdrop-blur-md border-b border-gray-200/50 sticky top-0 z-50 shadow-sm">
       <nav className="container mx-auto px-6">
-        <div className="flex items-center h-20">
+        <div className="flex items-center h-24 md:h-28">
           {/* Logo */}
           <div className="flex items-center">
             <button
@@ -50,14 +50,18 @@ const Header = ({ onToolSelect, currentTool, onPageSelect }) => {
                 if (onPageSelect) onPageSelect(null);
                 window.history.pushState({}, '', '/');
               }}
-              className="text-3xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent hover:from-blue-700 hover:via-purple-700 hover:to-blue-700 transition-all duration-300 flex items-center space-x-3"
+              className="transition-all duration-300 flex items-center hover:opacity-80 focus:outline-none"
             >
               <img 
                 src="/pixmerge.png" 
                 alt="Pixmerge Logo" 
-                className="h-10 w-10 object-contain"
+                className="h-24 md:h-28 w-auto object-contain"
+                style={{ minHeight: '80px', maxHeight: '112px' }}
+                onError={(e) => {
+                  console.error('Logo failed to load:', e);
+                  e.target.style.display = 'none';
+                }}
               />
-              <span>Pixmerge</span>
             </button>
           </div>
 
