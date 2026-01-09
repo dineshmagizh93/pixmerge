@@ -2,9 +2,9 @@
 // Replace with your actual AdSense Publisher ID
 // You can get this from: https://www.google.com/adsense
 
-// Load publisher ID from environment or use placeholder
+// Load publisher ID from environment or use default
 // Note: In Vite, use import.meta.env instead of process.env
-const PUBLISHER_ID = import.meta.env.VITE_ADSENSE_PUBLISHER_ID || 'ca-pub-XXXXXXXXXX';
+const PUBLISHER_ID = import.meta.env.VITE_ADSENSE_PUBLISHER_ID || 'ca-pub-3067164624147107';
 
 export const ADSENSE_CONFIG = {
   // Your AdSense Publisher ID (format: ca-pub-XXXXXXXXXX)
@@ -15,8 +15,7 @@ export const ADSENSE_CONFIG = {
   // Set to false in .env: VITE_ADSENSE_ENABLED=false
   ENABLED: import.meta.env.PROD && 
            import.meta.env.VITE_ADSENSE_ENABLED !== 'false' &&
-           PUBLISHER_ID && 
-           !PUBLISHER_ID.includes('XXXXXXXXXX'),
+           PUBLISHER_ID,
   
   // Ad slot IDs (you'll create these in AdSense dashboard)
   // Set these via environment variables or replace defaults
