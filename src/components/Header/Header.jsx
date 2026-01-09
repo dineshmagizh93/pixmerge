@@ -50,9 +50,13 @@ const Header = ({ onToolSelect, currentTool, onPageSelect }) => {
                 if (onPageSelect) onPageSelect(null);
                 window.history.pushState({}, '', '/');
               }}
-              className="text-3xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent hover:from-blue-700 hover:via-purple-700 hover:to-blue-700 transition-all duration-300 flex items-center space-x-2"
+              className="text-3xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent hover:from-blue-700 hover:via-purple-700 hover:to-blue-700 transition-all duration-300 flex items-center space-x-3"
             >
-              <span className="text-4xl">📄</span>
+              <img 
+                src="/pixmerge.png" 
+                alt="Pixmerge Logo" 
+                className="h-10 w-10 object-contain"
+              />
               <span>Pixmerge</span>
             </button>
           </div>
