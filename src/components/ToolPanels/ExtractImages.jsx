@@ -1,0 +1,178 @@
+import { useState } from 'react';
+import FileUpload from '../FileUpload/FileUpload';
+import { extractImages } from '../../services/pdf/extract';
+import { validatePDFFile, formatFileSize } from '../../services/utils/fileHandler';
+import { saveAs } from 'file-saver';
+
+const ExtractImages = () => {
+  const [file, setFile] = useState(null);
+  const [processing, setProcessing] = useState(false);
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
+
+  const handleFileSelect = (selectedFile) => {
+    const validation = validatePDFFile(selectedFile);
+    if (!validation.valid) {
+      setError(validation.error);
+      return;
+    }
+    setFile(selectedFile);
+    setError(null);
+    setResult(null);
+  };
+
+  const handleExtract = async () => {
+    if (!file) return;
+
+    setProcessing(true);
+    setError(null);
+
+    try {
+      const images = await extractImages(file);
+      setResult(images);
+    } catch (err) {
+      setError(err.message || 'Failed to extract images');
+    } finally {
+      setProcessing(false);
+    }
+  };
+
+  const handleDownload = (blob, filename) => {
+    saveAs(blob, filename);
+  };
+
+  const handleDownloadAll = () => {
+    if (result) {
+      result.forEach((item) => {
+        saveAs(item.blob, item.filename);
+      });
+    }
+  };
+
+  const handleReset = () => {
+    setFile(null);
+    setResult(null);
+    setError(null);
+  };
+
+  return (
+    <div className="container mx-auto px-4 py-12 max-w-4xl">
+      <div className="text-center mb-8">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">Extract images from PDF</h1>
+        <p className="text-lg text-gray-600">
+          Extract all images from your PDF document.
+        </p>
+      </div>
+
+      {!file && !result && (
+        <FileUpload
+          onFileSelect={handleFileSelect}
+          acceptedTypes=".pdf"
+          multiple={false}
+          label="Select PDF file"
+        />
+      )}
+
+      {file && !result && (
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="mb-4">
+            <p className="text-gray-700 mb-2">
+              <span className="font-semibold">File:</span> {file.name}
+            </p>
+            <p className="text-gray-700">
+              <span className="font-semibold">Size:</span> {formatFileSize(file.size)}
+            </p>
+          </div>
+
+          <div className="flex space-x-4">
+            <button
+              onClick={handleExtract}
+              disabled={processing}
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+            >
+              {processing ? 'Extracting...' : 'Extract Images'}
+            </button>
+            <button
+              onClick={handleReset}
+              className="bg-gray-200 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
+            >
+              Choose another file
+            </button>
+          </div>
+
+          {error && (
+            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+              {error}
+            </div>
+          )}
+        </div>
+      )}
+
+      {result && (
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Extraction Complete!</h2>
+            <p className="text-gray-700 mb-4">
+              Found {result.length} image{result.length !== 1 ? 's' : ''} in the PDF.
+            </p>
+
+            {result.length > 0 ? (
+              <div className="space-y-2 max-h-64 overflow-y-auto mb-4">
+                {result.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                  >
+                    <div>
+                      <span className="text-gray-700 font-medium">{item.filename}</span>
+                      <span className="text-sm text-gray-500 ml-2">
+                        (Page {item.pageNumber})
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => handleDownload(item.blob, item.filename)}
+                      className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                    >
+                      Download
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-600">No images found in this PDF.</p>
+            )}
+          </div>
+
+          {result.length > 0 && (
+            <div className="flex space-x-4">
+              <button
+                onClick={handleDownloadAll}
+                className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+              >
+                Download All ({result.length} images)
+              </button>
+              <button
+                onClick={handleReset}
+                className="bg-gray-200 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
+              >
+                Extract from another file
+              </button>
+            </div>
+          )}
+
+          {result.length === 0 && (
+            <button
+              onClick={handleReset}
+              className="bg-gray-200 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
+            >
+              Try another file
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ExtractImages;
+
