@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { TOOLS, NAVIGATION_ITEMS } from '../../utils/constants';
 
-const Header = ({ onToolSelect, currentTool }) => {
+const Header = ({ onToolSelect, currentTool, onPageSelect }) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const dropdownRef = useRef(null);
 
@@ -45,7 +45,11 @@ const Header = ({ onToolSelect, currentTool }) => {
           {/* Logo */}
           <div className="flex items-center">
             <button
-              onClick={() => onToolSelect(null)}
+              onClick={() => {
+                onToolSelect(null);
+                if (onPageSelect) onPageSelect(null);
+                window.history.pushState({}, '', '/');
+              }}
               className="text-3xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent hover:from-blue-700 hover:via-purple-700 hover:to-blue-700 transition-all duration-300 flex items-center space-x-2"
             >
               <span className="text-4xl">📄</span>
