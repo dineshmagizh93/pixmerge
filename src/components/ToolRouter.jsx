@@ -74,7 +74,7 @@ const ToolRouter = ({ toolId }) => {
 
   if (!ToolComponent) {
     return (
-      <ToolLayout>
+      <ToolLayout toolId={toolId}>
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Tool Coming Soon</h2>
           <p className="text-gray-600">
@@ -86,7 +86,7 @@ const ToolRouter = ({ toolId }) => {
   }
 
   return (
-    <ToolLayout>
+    <ToolLayout toolId={toolId}>
       <ToolComponent />
     </ToolLayout>
   );

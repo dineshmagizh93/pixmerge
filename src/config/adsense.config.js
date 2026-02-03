@@ -4,7 +4,7 @@
 
 // Load publisher ID from environment or use default
 // Note: In Vite, use import.meta.env instead of process.env
-const PUBLISHER_ID = import.meta.env.VITE_ADSENSE_PUBLISHER_ID || 'ca-pub-3067164624147107';
+const PUBLISHER_ID = import.meta.env.VITE_ADSENSE_PUBLISHER_ID || 'ca-pub-8975115432793623';
 
 export const ADSENSE_CONFIG = {
   // Your AdSense Publisher ID (format: ca-pub-XXXXXXXXXX)

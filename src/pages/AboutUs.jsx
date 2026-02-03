@@ -1,9 +1,17 @@
 import AdSense from '../components/AdSense/AdSense';
 import { ADSENSE_CONFIG } from '../config/adsense.config';
+import SEO from '../components/SEO/SEO';
 
 const AboutUs = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <>
+      <SEO 
+        title="About Us - Pixmerge | Free PDF Tools Online"
+        description="Learn about Pixmerge - your trusted partner for all PDF editing needs. Free, secure, and completely private PDF tools. 100% client-side processing."
+        canonical="https://pixmerge.com/about"
+        keywords="about pixmerge, PDF tools, free PDF editor, online PDF tools"
+      />
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-6 py-16 max-w-4xl">
         {/* Hero Section */}
         <div className="text-center mb-12">
@@ -208,6 +216,7 @@ const AboutUs = () => {
         </section>
       </div>
     </div>
+    </>
   );
 };
 

@@ -1,0 +1,47 @@
+# Netlify redirects file for client-side routing
+# This ensures all routes are handled by index.html for React Router
+
+# Redirect old hash-based URLs to path-based URLs
+/#merge-pdf /merge-pdf 301
+/#split-pdf /split-pdf 301
+/#compress-pdf /compress-pdf 301
+/#pdf-to-jpg /pdf-to-jpg 301
+/#jpg-to-pdf /jpg-to-pdf 301
+/#word-to-pdf /word-to-pdf 301
+/#pdf-to-word /pdf-to-word 301
+/#html-to-pdf /html-to-pdf 301
+/#pdf-to-html /pdf-to-html 301
+/#excel-to-pdf /excel-to-pdf 301
+/#pdf-to-excel /pdf-to-excel 301
+/#powerpoint-to-pdf /powerpoint-to-pdf 301
+/#pdf-to-powerpoint /pdf-to-powerpoint 301
+/#pdf-to-pdfa /pdf-to-pdfa 301
+/#rotate-pdf /rotate-pdf 301
+/#add-watermark /add-watermark 301
+/#add-page-numbers /add-page-numbers 301
+/#crop-pdf /crop-pdf 301
+/#organize-pdf /organize-pdf 301
+/#remove-pages /remove-pages 301
+/#extract-pages /extract-pages 301
+/#extract-images /extract-images 301
+/#extract-text /extract-text 301
+/#grayscale-pdf /grayscale-pdf 301
+/#add-margins /add-margins 301
+/#repair-pdf /repair-pdf 301
+/#ocr-pdf /ocr-pdf 301
+/#edit-pdf /edit-pdf 301
+/#unlock-pdf /unlock-pdf 301
+/#protect-pdf /protect-pdf 301
+/#sign-pdf /sign-pdf 301
+/#redact-pdf /redact-pdf 301
+/#compare-pdf /compare-pdf 301
+
+# Redirect alternative page paths to canonical paths
+/about-us /about 301
+/contact-us /contact 301
+/privacy /privacy-policy 301
+/terms-conditions /terms 301
+/terms-and-conditions /terms 301
+
+# Handle all other routes - serve index.html for client-side routing
+/*    /index.html   200

@@ -1,11 +1,19 @@
 import AdSense from '../components/AdSense/AdSense';
 import { ADSENSE_CONFIG } from '../config/adsense.config';
+import SEO from '../components/SEO/SEO';
 
 const TermsConditions = () => {
   const lastUpdated = 'January 15, 2026';
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <>
+      <SEO 
+        title="Terms & Conditions - Pixmerge | Terms of Service"
+        description="Read Pixmerge's terms and conditions. Understand the terms of use for our free PDF tools and services."
+        canonical="https://pixmerge.com/terms"
+        keywords="terms and conditions, terms of service, PDF tools terms"
+      />
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-6 py-16 max-w-4xl">
         {/* Header */}
         <div className="text-center mb-12">
@@ -270,6 +278,7 @@ const TermsConditions = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

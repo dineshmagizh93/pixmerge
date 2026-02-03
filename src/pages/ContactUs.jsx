@@ -3,6 +3,7 @@ import emailjs from '@emailjs/browser';
 import AdSense from '../components/AdSense/AdSense';
 import { ADSENSE_CONFIG } from '../config/adsense.config';
 import { EMAIL_CONFIG } from '../config/email.config';
+import SEO from '../components/SEO/SEO';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -73,7 +74,14 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <>
+      <SEO 
+        title="Contact Us - Pixmerge | Get in Touch"
+        description="Contact Pixmerge for support, feedback, or questions about our free PDF tools. We're here to help you with all your PDF editing needs."
+        canonical="https://pixmerge.com/contact"
+        keywords="contact pixmerge, PDF tools support, contact PDF editor"
+      />
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-6 py-16 max-w-4xl">
         {/* Hero Section */}
         <div className="text-center mb-12">
@@ -248,6 +256,7 @@ const ContactUs = () => {
 
       </div>
     </div>
+    </>
   );
 };
 

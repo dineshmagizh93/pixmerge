@@ -1,11 +1,19 @@
 import AdSense from '../components/AdSense/AdSense';
 import { ADSENSE_CONFIG } from '../config/adsense.config';
+import SEO from '../components/SEO/SEO';
 
 const PrivacyPolicy = () => {
   const lastUpdated = 'January 15, 2026';
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <>
+      <SEO 
+        title="Privacy Policy - Pixmerge | Your Privacy Matters"
+        description="Read Pixmerge's privacy policy. Learn how we protect your data with 100% client-side processing. No file uploads, complete privacy guaranteed."
+        canonical="https://pixmerge.com/privacy-policy"
+        keywords="privacy policy, PDF tools privacy, data protection, client-side processing"
+      />
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-6 py-16 max-w-4xl">
         {/* Header */}
         <div className="text-center mb-12">
@@ -216,6 +224,7 @@ const PrivacyPolicy = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

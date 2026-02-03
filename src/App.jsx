@@ -14,35 +14,48 @@ function App() {
   const [currentTool, setCurrentTool] = useState(null);
   const [currentPage, setCurrentPage] = useState(null);
 
-  // Handle routing based on URL hash or path
+  // Handle routing based on URL path (path-based routing for SEO)
   useEffect(() => {
     const handleRoute = () => {
-      const hash = window.location.hash.replace('#', '');
       const path = window.location.pathname;
+      const hash = window.location.hash.replace('#', '');
 
-      // Check for tool routes (hash-based)
-      if (hash && hash.startsWith('tool-')) {
-        const toolId = hash.replace('tool-', '');
-        setCurrentTool(toolId);
+      // Check for tool routes (path-based: /merge-pdf, /split-pdf, etc.)
+      // List of all valid tool IDs
+      const validToolIds = [
+        'merge-pdf', 'split-pdf', 'compress-pdf', 'pdf-to-jpg', 'jpg-to-pdf',
+        'word-to-pdf', 'pdf-to-word', 'html-to-pdf', 'pdf-to-html', 'excel-to-pdf',
+        'pdf-to-excel', 'powerpoint-to-pdf', 'pdf-to-powerpoint', 'pdf-to-pdfa',
+        'rotate-pdf', 'add-watermark', 'add-page-numbers', 'crop-pdf', 'organize-pdf',
+        'remove-pages', 'extract-pages', 'extract-images', 'extract-text', 'grayscale-pdf',
+        'add-margins', 'repair-pdf', 'ocr-pdf', 'edit-pdf', 'unlock-pdf', 'protect-pdf',
+        'sign-pdf', 'redact-pdf', 'compare-pdf'
+      ];
+
+      // Check if path is a tool route (e.g., /merge-pdf)
+      const pathToolId = path.slice(1); // Remove leading '/'
+      if (pathToolId && validToolIds.includes(pathToolId)) {
+        setCurrentTool(pathToolId);
         setCurrentPage(null);
         return;
       }
 
-      // Check for page routes
-      if (path === '/about' || path === '/about-us') {
+      // Check for page routes (canonical paths only - no redirects)
+      if (path === '/about') {
         setCurrentPage('about');
         setCurrentTool(null);
-      } else if (path === '/contact' || path === '/contact-us') {
+      } else if (path === '/contact') {
         setCurrentPage('contact');
         setCurrentTool(null);
-      } else if (path === '/privacy-policy' || path === '/privacy') {
+      } else if (path === '/privacy-policy') {
         setCurrentPage('privacy');
         setCurrentTool(null);
-      } else if (path === '/terms' || path === '/terms-conditions' || path === '/terms-and-conditions') {
+      } else if (path === '/terms') {
         setCurrentPage('terms');
         setCurrentTool(null);
-      } else if (hash && !hash.startsWith('tool-')) {
-        // Legacy tool routing via hash
+      } else if (hash && validToolIds.includes(hash)) {
+        // Legacy hash-based routing - redirect to path-based
+        window.history.replaceState({}, '', `/${hash}`);
         setCurrentTool(hash);
         setCurrentPage(null);
       } else {
@@ -53,20 +66,18 @@ function App() {
 
     handleRoute();
     window.addEventListener('popstate', handleRoute);
-    window.addEventListener('hashchange', handleRoute);
 
     return () => {
       window.removeEventListener('popstate', handleRoute);
-      window.removeEventListener('hashchange', handleRoute);
     };
   }, []);
 
   const handleToolSelect = (toolId) => {
     setCurrentTool(toolId);
     setCurrentPage(null);
-    // Update URL hash for tool
+    // Update URL path for tool (path-based for SEO)
     if (toolId) {
-      window.history.pushState({}, '', `#${toolId}`);
+      window.history.pushState({}, '', `/${toolId}`);
     } else {
       window.history.pushState({}, '', '/');
     }
